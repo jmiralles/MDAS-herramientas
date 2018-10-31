@@ -12,6 +12,9 @@ def build():
     except:
         print("Error building go")
 
+def run_command(cmd):
+    os.system(cmd)
+
 '''
 
 def run():
