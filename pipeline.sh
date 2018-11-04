@@ -19,7 +19,7 @@ run(){
 
 test() {
     http_client() {
-        curl --url 'http://localhost:8080/vote' --request $1 --data "$2" --header 'Content-Type: application/json'
+        curl --url 'http://localhost:8080/vote' --request $1 --data "$2" --header 'Content-Type: application/json' 
     }
     topics='{"topics":["bash","python","go"]}'
     expectedWinner='bash'

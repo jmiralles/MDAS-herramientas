@@ -1,73 +1,37 @@
-import os
-
-votingappPath = './src/votingapp'
-
-def build():
-    os.chdir(votingappPath) # move to path
-
-    os.system('./deps.sh')
-    os.system('rm -rf ./deploy')
-    try:
-        os.system('go build -o ./deploy/votingapp && cp -r ui ./deploy')
-    except:
-        print("Error building go")
-
-def run_command(cmd):
-    os.system(cmd)
-
-'''
-
-def run():
-    app = 'votingapp'
-    os.chdir(votingappPath) 
-
-    pid = "(ps | grep {app} | awk '{ print $1 }' | head -1)"
-
-    try:
-        os.system('kill -9 {pid} ')
-        os.system('./deploy/votingapp & ')
-
-    except:
-        print("Error run")
-
-
- 
-
+import requests
+import json
+import unittest
 
 def test():
-    http_client() {
-        curl --url 'http://localhost:8080/vote' --request $1 --data "$2" --header 'Content-Type: application/json'
-    }
-    topics='{"topics":["bash","python","go"]}'
-    expectedWinner='bash'
-    http_client POST $topics
+    http_client('POST', {"topics":["bash","python","go"]})
+    options = ["bash", "bash", "bash", "python"]
+    expected_winner = "bash"
 
-    echo "Given voting topics $topics, When vote for $options, Then winner is $expectedWinner"
+    for option in options:
+        t = {"topic": option}
+        http_client('PUT', t)
 
-    for option in bash bash bash python
-    do
-        http_client PUT '{"topic":"'$option'"}'
-    done
+    winner_response = http_client('DEL')
+    winner = winner_response["winner"]
+    if winner == expected_winner:
+        print("Test Passed!")
+    else:
+        print("Test Failed")    
 
-    winner=$(http_client DELETE | jq -r '.winner')
+def http_client(method, data={}):
+    headers = {'Content-Type': 'application/json'}
+    url = 'http://localhost:8080/vote'
+     
+    if method == 'POST':
+        r = requests.post(url, json=data)
+    elif method == 'PUT':
+        r = requests.put(url, json=data)
+    else:
+        r = requests.delete(url, headers=headers)       
 
-    if [ "$expectedWinner" = "$winner" ]; then
-        return 0
-    else
-        return 1
-    fi        
+    print(r.json())  
+    print(r.status_code)
 
+    return r.json()  
 
-if build > log 2> error; then
-    echo "Build Completed"
-    run
-    if test; then
-        echo "Test Passed"
-    else 
-        echo "Test Failed"
-    fi        
-else
-    echo "FAILED"
-fi    
-
-'''
+test()
