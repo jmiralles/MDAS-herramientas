@@ -13,10 +13,13 @@ def test():
 
     winner_response = http_client('DELETE')
     winner = winner_response["winner"]
+
     if winner == expected_winner:
         print("Test Passed!")
+        return 0
     else:
-        print("Test Failed")    
+        print("Test Failed")
+        return 1    
 
 def http_client(method, data={}):
     headers = {'Content-Type': 'application/json'}
@@ -35,5 +38,6 @@ def http_client(method, data={}):
     print(r.status_code)
 
     return r.json()  
+
 
 test()

@@ -18,6 +18,9 @@ run(){
 }
 
 test() {
+    python3 pipeline.py
+}
+_test() {
     http_client() {
         curl --url 'http://localhost:8080/vote' --request $1 --data "$2" --header 'Content-Type: application/json' 
     }
@@ -41,14 +44,16 @@ test() {
     fi        
 }
 
-if build > log 2> error; then
-    echo "Build Completed"
-    run
-    if test; then
-        echo "Test Passed"
-    else 
-        echo "Test Failed"
-    fi        
+if (build && run) > log 2> error; then
+    echo "Build Completed!"   
+    if _test; then
+        echo "TEST OK!"
+        echo "Pipeline OK!"
+    else
+        echo "Test failed"
+        exit 1
+    fi
 else
-    echo "FAILED"
+    echo "Pipeline FAILED!"
+    exit 1
 fi    
