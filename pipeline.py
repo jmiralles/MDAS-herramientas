@@ -11,7 +11,7 @@ def test():
         t = {"topic": option}
         http_client('PUT', t)
 
-    winner_response = http_client('DEL')
+    winner_response = http_client('DELETE')
     winner = winner_response["winner"]
     if winner == expected_winner:
         print("Test Passed!")
@@ -26,8 +26,10 @@ def http_client(method, data={}):
         r = requests.post(url, json=data)
     elif method == 'PUT':
         r = requests.put(url, json=data)
-    else:
+    elif method == 'DELETE':
         r = requests.delete(url, headers=headers)       
+    else:
+        raise ValueError('Method not available!')
 
     print(r.json())  
     print(r.status_code)
