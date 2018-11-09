@@ -1,7 +1,11 @@
 #!/bin/bash
 
+url=${VOTING_URL:-'http://votingapp:8080'}
+
+echo $url
+
 http_client() {
-    curl --url 'http://votingapp:8080/vote' --request $1 --data "$2" --header 'Content-Type: application/json' 
+    curl --url $url --request $1 --data "$2" --header 'Content-Type: application/json' 
 }
 topics='{"topics":["bash","python","go"]}'
 expectedWinner='bash'
