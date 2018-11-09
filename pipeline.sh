@@ -18,7 +18,7 @@ run(){
 }
 
 test() {
-    python3 pipeline.py
+    python3 test_python.py
 }
 _test() {
     http_client() {
@@ -46,7 +46,7 @@ _test() {
 
 if (build && run) > log 2> error; then
     echo "Build Completed!"   
-    if _test; then
+    if test; then
         echo "TEST OK!"
         echo "Pipeline OK!"
     else
