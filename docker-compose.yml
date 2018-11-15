@@ -1,0 +1,33 @@
+version: "3.6"
+
+services:
+  gateway:
+    image: nginx:stable-alpine
+    container_name: nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+
+
+  votingapp:
+    #image: ${REGISTRY-:jmiralles99}/votingapp
+    image: jmiralles99/votingapp
+    build:
+      context: ./src/votingapp-redis
+      dockerfile: Dockerfile
+    environment:
+      REDIS: database:6379
+  
+  database:
+    image: redis
+
+  votingapp-test:
+    image: votingapp-test
+    build:
+      context: ./test
+    environment:
+      VOTING_URL: http://votingapp:8080/vote
+
+  
