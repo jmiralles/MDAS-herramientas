@@ -8,8 +8,7 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
-
+      - "0.0.0.0:80:80"
 
   votingapp:
     #image: ${REGISTRY-:jmiralles99}/votingapp
@@ -19,6 +18,8 @@ services:
       dockerfile: Dockerfile
     environment:
       REDIS: database:6379
+    expose:
+      - "5959"
   
   database:
     image: redis

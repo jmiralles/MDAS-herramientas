@@ -1,7 +1,12 @@
-FROM ubuntu:18.04
-RUN apt-get update && apt-get install -y curl jq
+FROM python:3.6-alpine
 
-COPY test.sh .
-RUN chmod +x test.sh
+COPY requirements.txt /
 
-ENTRYPOINT [ "bash", "-c", "./test.sh" ]
+RUN pip install -r /requirements.txt
+
+ADD test_python.py /
+CMD [ "python", "./test_python.py" ]
+
+
+#CMD ["./test_python.py"]
+#ENTRYPOINT [ "test.sh" ]
