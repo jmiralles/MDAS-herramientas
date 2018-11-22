@@ -9,8 +9,8 @@ COPY . .
 RUN go build -o /deploy/votingapp && cp -r ui /deploy
 
 # RUNTIME
-FROM ubuntu:18.04
+FROM alpine
 WORKDIR /app
 
 COPY --from=builder /deploy .
-ENTRYPOINT [ "./votingapp" ]
+ENTRYPOINT ["./votingapp" ]

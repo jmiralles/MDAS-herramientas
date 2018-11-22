@@ -1,11 +1,11 @@
-FROM python:3.6-alpine
+FROM python:alpine
 
-COPY requirements.txt /
+COPY requirements.txt .
 
-RUN pip install -r /requirements.txt
+RUN pip install -r requirements.txt
 
-ADD test_python.py /
-CMD [ "python", "./test_python.py" ]
+ADD test_python.py .
+ENTRYPOINT [ "python", "test_python.py" ]
 
 
 #CMD ["./test_python.py"]

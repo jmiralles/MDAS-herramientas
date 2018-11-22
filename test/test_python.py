@@ -33,7 +33,7 @@ def http_client(method, data={}):
     print(data)
 
     headers = {'Content-Type': 'application/json'}
-    url = 'http://localhost:8080/vote'
+    url = 'http://votingapp:80/vote'
      
     if method == 'POST':
         r = requests.post(url, json=data)

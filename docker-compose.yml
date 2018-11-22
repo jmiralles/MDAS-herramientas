@@ -11,15 +11,16 @@ services:
       - "0.0.0.0:80:80"
 
   votingapp:
-    #image: ${REGISTRY-:jmiralles99}/votingapp
-    image: jmiralles99/votingapp
+    image: ${REGISTRY:-jmiralles99}/votingapp
+    #image: jmiralles99/votingapp:${TAG:-latest}
+    container_name: votingapp
     build:
       context: ./src/votingapp-redis
       dockerfile: Dockerfile
     environment:
       REDIS: database:6379
     expose:
-      - "5959"
+      - "8080"
   
   database:
     image: redis
